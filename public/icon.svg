@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mayarFaviconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#7C3AED" />
+      <stop offset="100%" stopColor="#6366F1" />
+    </linearGradient>
+  </defs>
+  <g fill="url(#mayarFaviconGrad)">
+    <rect x="12" y="35" width="32" height="85" rx="16" transform="rotate(-22 12 35)" />
+    <rect x="48" y="12" width="32" height="95" rx="16" transform="rotate(22 48 12)" />
+    <rect x="96" y="35" width="32" height="85" rx="16" transform="rotate(-22 96 35)" />
+  </g>
+</svg>
