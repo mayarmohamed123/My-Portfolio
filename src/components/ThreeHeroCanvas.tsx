@@ -106,10 +106,10 @@ export default function ThreeHeroCanvas() {
 
     // Animation loop
     let animId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
-      const t = clock.getElapsedTime();
+      const t = (performance.now() - startTime) * 0.001;
 
       group.rotation.x = t * 0.2 + mouseY * 0.4;
       group.rotation.y = t * 0.25 + mouseX * 0.4;
@@ -128,6 +128,7 @@ export default function ThreeHeroCanvas() {
     };
 
     animate();
+
 
     const handleResize = () => {
       if (!container) return;

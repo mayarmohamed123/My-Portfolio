@@ -1,9 +1,15 @@
 "use client";
 
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { HiHeart } from "react-icons/hi";
+import Link from "next/link";
 import MayarLogo from "./MayarLogo";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
   { icon: SiGithub, href: "https://github.com/", label: "GitHub" },
@@ -12,22 +18,35 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(el, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none none" },
+      });
+    }, el);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer className="relative py-10 px-6 border-t border-[#585A68]/30">
+    <footer ref={footerRef} className="relative py-10 px-6 border-t border-[#585A68]/30" style={{ opacity: 0 }}>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Left */}
         <div className="flex flex-col items-center md:items-start gap-2">
-          <MayarLogo iconSize={30} />
+          <Link href="/" className="group hover:opacity-90 transition-opacity">
+            <MayarLogo iconSize={30} />
+          </Link>
           <p className="text-xs text-text-muted flex items-center gap-1.5 mt-1">
-            Designed & Built with <HiHeart className="text-[#7C3AED] text-sm animate-pulse" /> by{" "}
+            Designed &amp; Built with <HiHeart className="text-[#7C3AED] text-sm animate-pulse" /> by{" "}
             <span className="font-semibold text-[#7C3AED]">Mayar Mohamed</span>
           </p>
           <p className="text-[11px] text-[#6C6E7E]">
-            © {new Date().getFullYear()} All rights reserved.
+            &copy; {new Date().getFullYear()} All rights reserved.
           </p>
         </div>
-
-        {/* Social Links */}
         <div className="flex items-center gap-4">
           {socialLinks.map((social) => (
             <a

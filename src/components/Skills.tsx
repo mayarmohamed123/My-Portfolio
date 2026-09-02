@@ -1,35 +1,19 @@
-"use client";
+﻿"use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionWrapper from "./SectionWrapper";
 import GlassCard from "./GlassCard";
 import { FaAws } from "react-icons/fa";
 import {
-  SiReact,
-  SiNextdotjs,
-  SiAngular,
-  SiVuedotjs,
-  SiTypescript,
-  SiJavascript,
-  SiTailwindcss,
-  SiBootstrap,
-  SiSass,
-  SiShadcnui,
-  SiNodedotjs,
-  SiExpress,
-  SiJsonwebtokens,
-  SiPostgresql,
-  SiMongodb,
-  SiPrisma,
-  SiRedux,
-  SiDocker,
-  SiGit,
-  SiGithub,
-  SiPostman,
-  SiVercel,
-  SiMapbox,
+  SiReact, SiNextdotjs, SiAngular, SiVuedotjs, SiTypescript, SiJavascript,
+  SiTailwindcss, SiBootstrap, SiSass, SiShadcnui, SiNodedotjs, SiExpress,
+  SiJsonwebtokens, SiPostgresql, SiMongodb, SiPrisma, SiRedux, SiDocker,
+  SiGit, SiGithub, SiPostman, SiVercel, SiMapbox,
 } from "react-icons/si";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Category = "frontend" | "backend" | "databases" | "state" | "cloud" | "tools";
 
@@ -94,22 +78,58 @@ const skillData: Record<Category, { name: string; detail: string; icon: any }[]>
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState<Category>("frontend");
+  const headerRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const headerEl = headerRef.current;
+      if (headerEl) {
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+        });
+        tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+          .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
+      }
+      const tabsEl = tabsRef.current;
+      if (tabsEl) {
+        gsap.fromTo(tabsEl.children, { opacity: 0, y: 18, scale: 0.9 }, {
+          opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.07, ease: "back.out(1.5)",
+          scrollTrigger: { trigger: tabsEl, start: "top 88%", toggleActions: "play none none none" },
+        });
+      }
+    });
+    return () => ctx.revert();
+  }, []);
+
+  // Animate grid cards when tab changes
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const gridEl = gridRef.current;
+    if (gridEl) {
+      gsap.fromTo(
+        gridEl.children,
+        { opacity: 0, y: 15, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.04, ease: "power2.out" }
+      );
+    }
+  }, [activeTab]);
 
   return (
     <SectionWrapper id="skills">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header with Magiera Script */}
-        <div className="text-center mb-12">
-          <p className="font-magiera text-3xl text-[#7C3AED] mb-1">
-            Technical Stack & Expertise
-          </p>
+        <div ref={headerRef} className="text-center mb-12" style={{ opacity: 0 }}>
+          <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Technical Stack & Expertise</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             My <span className="text-[#7C3AED] neon-purple">Skills</span> Matrix
           </h2>
         </div>
-
-        {/* Category Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div ref={tabsRef} className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat) => (
             <button
               key={cat.id}
@@ -124,39 +144,22 @@ export default function Skills() {
             </button>
           ))}
         </div>
-
-        {/* Skill Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          >
-            {skillData[activeTab].map((skill, i) => (
-              <GlassCard
-                key={skill.name}
-                delay={i * 0.04}
-                className="p-5 border border-[#585A68]/25 hover:border-[#7C3AED]/50 flex items-start gap-4"
-                hover
-              >
-                <div className="p-3 rounded-xl bg-[#7C3AED]/12 text-[#7C3AED] dark:text-[#6366F1] text-2xl flex-shrink-0">
-                  <skill.icon />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-text-main mb-1">
-                    {skill.name}
-                  </h3>
-                  <p className="text-xs text-[#6C6E7E] leading-relaxed">
-                    {skill.detail}
-                  </p>
-                </div>
-              </GlassCard>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        <div
+          ref={gridRef}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {skillData[activeTab].map((skill, i) => (
+            <GlassCard key={skill.name} delay={i * 0.04} className="p-5 border border-[#585A68]/25 hover:border-[#7C3AED]/50 flex items-start gap-4" hover>
+              <div className="p-3 rounded-xl bg-[#7C3AED]/12 text-[#7C3AED] dark:text-[#6366F1] text-2xl shrink-0">
+                <skill.icon />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-text-main mb-1">{skill.name}</h3>
+                <p className="text-xs text-[#6C6E7E] leading-relaxed">{skill.detail}</p>
+              </div>
+            </GlassCard>
+          ))}
+        </div>
       </div>
     </SectionWrapper>
   );

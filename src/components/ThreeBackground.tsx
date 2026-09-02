@@ -145,10 +145,10 @@ export default function ThreeBackground() {
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) * 0.001;
 
       // Smooth mouse interpolation
       targetX += (mouseX - targetX) * 0.05;
@@ -176,6 +176,7 @@ export default function ThreeBackground() {
     };
 
     animate();
+
 
     return () => {
       cancelAnimationFrame(animationFrameId);

@@ -1,119 +1,76 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionWrapper from "./SectionWrapper";
 import GlassCard from "./GlassCard";
-import { HiExternalLink, HiCode, HiSparkles, HiCube } from "react-icons/hi";
+import { HiExternalLink, HiCode, HiSparkles, HiArrowRight } from "react-icons/hi";
+import { mainProjects } from "@/data/projectsData";
 
-const projects = [
-  {
-    title: "Healing / Sehha / E-Pharma Hub",
-    badge: "Featured Graduation Project",
-    description:
-      "A comprehensive healthcare & e-pharmacy platform connecting patients, doctors, and pharmacies. Features doctor appointment booking, medicine ordering, real-time consultation messaging, and secure patient history management.",
-    tags: [
-      "Next.js 16",
-      "React 19",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "Prisma",
-      "SignalR",
-      "AWS Cognito",
-    ],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: true,
-  },
-  {
-    title: "AURA ESTATES",
-    badge: "Luxury Real Estate",
-    description:
-      "A sophisticated luxury real estate platform designed with a nude/neutral aesthetic, property filtering, and optimized rendering performance (LCP, CLS, INP) for smooth browsing.",
-    tags: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "Redux Toolkit",
-      "TanStack Query",
-      "shadcn/ui",
-    ],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: false,
-  },
-  {
-    title: "3D Interactive Web Experience",
-    badge: "Three.js & WebGL",
-    description:
-      "An immersive WebGL portfolio showcase featuring 3D particle constellations, dynamic lighting shaders, interactive wireframe geometries, and light/dark theme reactivity.",
-    tags: ["Three.js", "WebGL", "Next.js 16", "React", "Tailwind CSS"],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: false,
-  },
-  {
-    title: "Vue E-Commerce Platform",
-    badge: "Vue.js Ecosystem",
-    description:
-      "A modern online store built with Vue.js, featuring product category filtering, cart management, state persistence, and responsive UI components.",
-    tags: ["Vue.js", "Pinia", "Vuex", "Sass", "REST APIs"],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: false,
-  },
-  {
-    title: "React Admin & Analytics Dashboard",
-    badge: "Data Visualization",
-    description:
-      "An analytics dashboard for social and business management featuring dynamic data grids, engagement charts, and user management interfaces.",
-    tags: ["React", "Syncfusion EJ2", "Tailwind CSS", "REST API"],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: false,
-  },
-  {
-    title: "Mapbox Location & Filter App",
-    badge: "Geospatial & Filtering",
-    description:
-      "An interactive mapping application with location geocoding, coordinate search, filter URL encoding, and dynamic imports for optimal bundle loading.",
-    tags: ["React", "Next.js", "Mapbox GL", "Redux Toolkit", "TypeScript"],
-    liveUrl: "#",
-    codeUrl: "#",
-    featured: false,
-  },
-];
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Projects() {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const headerEl = headerRef.current;
+      if (headerEl) {
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+        });
+        tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+          .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
+      }
+      const gridEl = gridRef.current;
+      if (gridEl) {
+        gsap.fromTo(gridEl.children, { opacity: 0, y: 55, scale: 0.94 }, {
+          opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: gridEl, start: "top 82%", toggleActions: "play none none none" },
+        });
+      }
+      const ctaEl = ctaRef.current;
+      if (ctaEl) {
+        gsap.fromTo(ctaEl, { opacity: 0, y: 25 }, {
+          opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: ctaEl, start: "top 90%", toggleActions: "play none none none" },
+        });
+      }
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <SectionWrapper id="projects">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header with Magiera Script */}
-        <div className="text-center mb-16">
-          <p className="font-magiera text-3xl text-[#7C3AED] mb-1">
-            Production-Ready Work
-          </p>
+        {/* Section Header */}
+        <div ref={headerRef} className="text-center mb-16" style={{ opacity: 0 }}>
+          <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Production-Ready Work</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             Featured <span className="text-[#7C3AED] neon-purple">Projects</span>
           </h2>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, i) => (
+        {/* 3 Main Projects Grid */}
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mainProjects.map((project) => (
             <GlassCard
               key={project.title}
               hover
-              delay={i * 0.1}
-              className={`p-6 border border-[#585A68]/30 flex flex-col justify-between ${
-                project.featured ? "sm:col-span-2 lg:col-span-2 border-[#7C3AED]/50 bg-[#7C3AED]/5" : ""
+              delay={0}
+              className={`p-5 border border-[#585A68]/30 hover:border-[#7C3AED]/50 flex flex-col justify-between overflow-hidden group ${
+                project.featured ? "border-[#7C3AED]/40 bg-[#7C3AED]/5" : ""
               }`}
             >
               <div>
-                {/* Header Badge */}
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="text-[11px] font-bold tracking-wider uppercase px-3 py-1 rounded-full bg-[#7C3AED]/15 text-[#7C3AED] dark:text-[#6366F1] border border-[#7C3AED]/25">
+                {/* Project Badge & Header */}
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-[#7C3AED]/15 text-[#7C3AED] dark:text-[#6366F1] border border-[#7C3AED]/25">
                     {project.badge}
                   </span>
                   {project.featured && (
@@ -123,64 +80,81 @@ export default function Projects() {
                   )}
                 </div>
 
-                {/* Project Visual Icon Container */}
-                <div className="relative h-36 rounded-xl overflow-hidden mb-4 bg-gradient-to-br from-[#7C3AED]/15 via-[#6366F1]/10 to-[#585A68]/10 flex items-center justify-center border border-[#7C3AED]/20 group">
-                  <motion.div
-                    whileHover={{ scale: 1.08, rotate: 2 }}
-                    className="text-center relative z-10"
-                  >
-                    <div className="text-4xl text-[#7C3AED] mb-1 flex justify-center">
-                      {project.featured ? <HiCube className="animate-spin-slow text-5xl" /> : <HiCode />}
-                    </div>
-                    <p className="text-xs text-[#6C6E7E] font-medium">
-                      {project.tags[0]}
-                    </p>
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#7C3AED]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Project Image Preview */}
+                <div className="relative w-full h-48 rounded-xl overflow-hidden mb-4 border border-[#585A68]/20 bg-[#100D22]">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0914]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl font-bold text-text-main mb-2">
+                <h3 className="text-lg font-bold text-text-main mb-2 group-hover:text-[#7C3AED] transition-colors duration-200">
                   {project.title}
                 </h3>
-                <p className="text-xs text-text-muted leading-relaxed mb-4">
+                <p className="text-xs text-text-muted leading-relaxed mb-4 line-clamp-3">
                   {project.description}
                 </p>
               </div>
 
+              {/* Tags & Action Links */}
               <div>
-                {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.map((tag) => (
+                  {project.tags.slice(0, 4).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] px-2.5 py-0.5 rounded-md bg-[#585A68]/15 text-text-main font-medium border border-[#585A68]/20"
+                      className="text-[10px] px-2 py-0.5 rounded-md bg-[#585A68]/15 text-text-main font-medium border border-[#585A68]/20"
                     >
                       {tag}
                     </span>
                   ))}
+                  {project.tags.length > 4 && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-[#7C3AED]/10 text-[#7C3AED] font-medium">
+                      +{project.tags.length - 4}
+                    </span>
+                  )}
                 </div>
 
-                {/* Links */}
-                <div className="flex gap-4 pt-3 border-t border-[#585A68]/25">
-                  <a
-                    href={project.liveUrl}
-                    className="flex items-center gap-1.5 text-xs text-[#7C3AED] hover:text-[#6366F1] transition-colors font-semibold"
-                  >
-                    <HiExternalLink className="text-sm" />
-                    Live Demo
-                  </a>
-                  <a
-                    href={project.codeUrl}
-                    className="flex items-center gap-1.5 text-xs text-[#6C6E7E] hover:text-[#7C3AED] transition-colors font-medium"
-                  >
-                    <HiCode className="text-sm" />
-                    Source Code
-                  </a>
+                <div className="flex items-center gap-4 pt-3 border-t border-[#585A68]/25">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-[#7C3AED] hover:text-[#6366F1] transition-colors font-semibold"
+                    >
+                      <HiExternalLink className="text-sm" /> Live Demo
+                    </a>
+                  )}
+                  {project.codeUrl && (
+                    <a
+                      href={project.codeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-[#6C6E7E] hover:text-[#7C3AED] transition-colors font-medium"
+                    >
+                      <HiCode className="text-sm" /> Source Code
+                    </a>
+                  )}
                 </div>
               </div>
             </GlassCard>
           ))}
+        </div>
+
+        {/* See More Projects CTA Button */}
+        <div ref={ctaRef} className="mt-14 text-center" style={{ opacity: 0 }}>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full cta-purple font-bold text-sm tracking-wide shadow-lg shadow-[#7C3AED]/30 hover:scale-105 active:scale-95 transition-all duration-300 group"
+          >
+            <span>Explore All Projects</span>
+            <HiArrowRight className="text-lg transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </SectionWrapper>

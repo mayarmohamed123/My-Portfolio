@@ -1,26 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-@import url('https://fonts.cdnfonts.com/css/magiera-script');
 @import "tailwindcss";
-
-/* Fallback `@font-face` definition for Magiera Script */
-@font-face {
-  font-family: 'Magiera Script';
-  src: url('https://fonts.cdnfonts.com/s/97960/MagieraScript.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @theme inline {
   --font-sans: var(--font-outfit), system-ui, sans-serif;
-  --font-magiera: var(--font-great-vibes), 'Great Vibes', 'Magiera Script', cursive;
-  --font-script: var(--font-great-vibes), 'Great Vibes', 'Magiera Script', cursive;
+  --font-magiera: var(--font-great-vibes), 'Great Vibes', cursive;
+  --font-script: var(--font-great-vibes), 'Great Vibes', cursive;
 }
 
 /* === Magiera Script & Great Vibes Utility === */
 .font-magiera, .font-script {
-  font-family: var(--font-great-vibes), 'Great Vibes', 'Magiera Script', cursive;
+  font-family: var(--font-great-vibes), 'Great Vibes', cursive;
 }
+
 
 /* === Custom Color System (#7C3AED, #6366F1, #6C6E7E, #585A68) === */
 :root {
