@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
@@ -10,7 +10,7 @@ import {
   SiReact, SiNextdotjs, SiAngular, SiVuedotjs, SiTypescript, SiJavascript,
   SiTailwindcss, SiBootstrap, SiSass, SiShadcnui, SiNodedotjs, SiExpress,
   SiJsonwebtokens, SiPostgresql, SiMongodb, SiPrisma, SiRedux, SiDocker,
-  SiGit, SiGithub, SiPostman, SiVercel, SiMapbox,
+  SiGit, SiPostman, SiVercel, SiMapbox,
 } from "react-icons/si";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -87,17 +87,29 @@ export default function Skills() {
     const ctx = gsap.context(() => {
       const headerEl = headerRef.current;
       if (headerEl) {
+        gsap.set(headerEl, { opacity: 0 });
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: headerEl, start: "top 88%", toggleActions: "play none none none" },
         });
-        tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        tl.to(headerEl, { opacity: 1, duration: 0 })
+          .fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0)
           .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
       }
       const tabsEl = tabsRef.current;
       if (tabsEl) {
-        gsap.fromTo(tabsEl.children, { opacity: 0, y: 18, scale: 0.9 }, {
+        gsap.set(tabsEl.children, { opacity: 0, y: 18, scale: 0.9 });
+        gsap.to(tabsEl.children, {
           opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.07, ease: "back.out(1.5)",
-          scrollTrigger: { trigger: tabsEl, start: "top 88%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: tabsEl, start: "top 90%", toggleActions: "play none none none" },
+        });
+      }
+      // Initial grid entrance animation
+      const gridEl = gridRef.current;
+      if (gridEl) {
+        gsap.set(gridEl.children, { opacity: 0, y: 20, scale: 0.96 });
+        gsap.to(gridEl.children, {
+          opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.06, ease: "power3.out",
+          scrollTrigger: { trigger: gridEl, start: "top 90%", toggleActions: "play none none none" },
         });
       }
     });
@@ -123,7 +135,7 @@ export default function Skills() {
   return (
     <SectionWrapper id="skills">
       <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="text-center mb-12" style={{ opacity: 0 }}>
+        <div ref={headerRef} className="text-center mb-12">
           <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Technical Stack & Expertise</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             My <span className="text-[#7C3AED] neon-purple">Skills</span> Matrix
@@ -136,7 +148,7 @@ export default function Skills() {
               onClick={() => setActiveTab(cat.id)}
               className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
                 activeTab === cat.id
-                  ? "bg-gradient-to-r from-[#7C3AED] to-[#6366F1] text-white shadow-lg shadow-[#7C3AED]/25 scale-105"
+                  ? "bg-linear-to-r from-[#7C3AED] to-[#6366F1] text-white shadow-lg shadow-[#7C3AED]/25 scale-105"
                   : "glass-card text-text-muted hover:text-[#7C3AED] border border-[#585A68]/30"
               }`}
             >

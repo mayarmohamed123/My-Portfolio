@@ -21,24 +21,28 @@ export default function Projects() {
     const ctx = gsap.context(() => {
       const headerEl = headerRef.current;
       if (headerEl) {
+        gsap.set(headerEl, { opacity: 0 });
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: headerEl, start: "top 88%", toggleActions: "play none none none" },
         });
-        tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        tl.to(headerEl, { opacity: 1, duration: 0 })
+          .fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0)
           .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
       }
       const gridEl = gridRef.current;
       if (gridEl) {
-        gsap.fromTo(gridEl.children, { opacity: 0, y: 55, scale: 0.94 }, {
+        gsap.set(gridEl.children, { opacity: 0, y: 55, scale: 0.94 });
+        gsap.to(gridEl.children, {
           opacity: 1, y: 0, scale: 1, duration: 0.75, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: { trigger: gridEl, start: "top 82%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: gridEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
       const ctaEl = ctaRef.current;
       if (ctaEl) {
-        gsap.fromTo(ctaEl, { opacity: 0, y: 25 }, {
+        gsap.set(ctaEl, { opacity: 0, y: 25 });
+        gsap.to(ctaEl, {
           opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
-          scrollTrigger: { trigger: ctaEl, start: "top 90%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: ctaEl, start: "top 92%", toggleActions: "play none none none" },
         });
       }
     });
@@ -49,7 +53,7 @@ export default function Projects() {
     <SectionWrapper id="projects">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div ref={headerRef} className="text-center mb-16" style={{ opacity: 0 }}>
+        <div ref={headerRef} className="text-center mb-16">
           <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Production-Ready Work</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             Featured <span className="text-[#7C3AED] neon-purple">Projects</span>
@@ -89,7 +93,7 @@ export default function Projects() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0914]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0B0914]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Title & Description */}
@@ -147,7 +151,7 @@ export default function Projects() {
         </div>
 
         {/* See More Projects CTA Button */}
-        <div ref={ctaRef} className="mt-14 text-center" style={{ opacity: 0 }}>
+        <div ref={ctaRef} className="mt-14 text-center">
           <Link
             href="/projects"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full cta-purple font-bold text-sm tracking-wide shadow-lg shadow-[#7C3AED]/30 hover:scale-105 active:scale-95 transition-all duration-300 group"

@@ -33,7 +33,10 @@ export const metadata: Metadata = {
     "Mayar Mohamed",
   ],
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },

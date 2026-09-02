@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
@@ -57,31 +57,36 @@ export default function About() {
     const ctx = gsap.context(() => {
       const headerEl = headerRef.current;
       if (headerEl) {
+        gsap.set(headerEl, { opacity: 0 });
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: headerEl, start: "top 88%", toggleActions: "play none none none" },
         });
         tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
-          .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
+          .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3")
+          .to(headerEl, { opacity: 1, duration: 0 }, 0);
       }
       const cardsEl = cardsRef.current;
       if (cardsEl) {
-        gsap.fromTo(cardsEl.children, { opacity: 0, y: 40, scale: 0.95 }, {
+        gsap.set(cardsEl.children, { opacity: 0, y: 40, scale: 0.95 });
+        gsap.to(cardsEl.children, {
           opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: { trigger: cardsEl, start: "top 82%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: cardsEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
       const bioEl = bioRef.current;
       if (bioEl) {
-        gsap.fromTo(bioEl, { opacity: 0, x: -50 }, {
+        gsap.set(bioEl, { opacity: 0, x: -50 });
+        gsap.to(bioEl, {
           opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: bioEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: bioEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
       const ecoEl = ecosystemRef.current;
       if (ecoEl) {
-        gsap.fromTo(ecoEl, { opacity: 0, x: 50 }, {
+        gsap.set(ecoEl, { opacity: 0, x: 50 });
+        gsap.to(ecoEl, {
           opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: ecoEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: ecoEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
     });
@@ -91,7 +96,7 @@ export default function About() {
   return (
     <SectionWrapper id="about">
       <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="text-center mb-16" style={{ opacity: 0 }}>
+        <div ref={headerRef} className="text-center mb-16">
           <p className="font-magiera text-3xl text-[#7C3AED] mb-1 ">Get To Know My Background</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             About <span className="text-[#7C3AED] neon-purple">Me</span>
@@ -109,7 +114,7 @@ export default function About() {
           ))}
         </div>
         <div className="grid lg:grid-cols-2 gap-10 items-stretch">
-          <div ref={bioRef} style={{ opacity: 0 }}>
+          <div ref={bioRef}>
             <GlassCard className="h-full p-8 border border-[#585A68]/30 flex flex-col justify-between" delay={0.2}>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -137,7 +142,7 @@ export default function About() {
               </div>
             </GlassCard>
           </div>
-          <div ref={ecosystemRef} style={{ opacity: 0 }}>
+          <div ref={ecosystemRef}>
             <GlassCard className="h-full p-8 border border-[#585A68]/30 flex flex-col justify-between" delay={0.3}>
               <div>
                 <div className="flex items-center gap-2 mb-6">

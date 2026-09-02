@@ -1,13 +1,22 @@
-<svg width="64" height="64" viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="mayarFaviconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stopColor="#7C3AED" />
-      <stop offset="100%" stopColor="#6366F1" />
+      <stop offset="100%" stopColor="#4F46E5" />
+    </linearGradient>
+    <linearGradient id="mLetterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stopColor="#FFFFFF" />
+      <stop offset="100%" stopColor="#EDE9FE" />
     </linearGradient>
   </defs>
-  <g fill="url(#mayarFaviconGrad)">
-    <rect x="12" y="35" width="32" height="85" rx="16" transform="rotate(-22 12 35)" />
-    <rect x="48" y="12" width="32" height="95" rx="16" transform="rotate(22 48 12)" />
-    <rect x="96" y="35" width="32" height="85" rx="16" transform="rotate(-22 96 35)" />
-  </g>
+  
+  <!-- Rounded Base Background with subtle glow outline -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)" />
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="rgba(255,255,255,0.25)" stroke-width="2" />
+  
+  <!-- Bold, High-Contrast Letter 'M' Optimized for Small Favicon Displays -->
+  <path
+    d="M14 49 V19 C14 16.2 16.2 14 19 14 C20.8 14 22.4 15 23.4 16.6 L32 32.5 L40.6 16.6 C41.6 15 43.2 14 45 14 C47.8 14 50 16.2 50 19 V49 C50 51.2 48.2 53 46 53 C43.8 53 42 51.2 42 49 V27.5 L34.5 41.5 C33.4 43.5 30.6 43.5 29.5 41.5 L22 27.5 V49 C22 51.2 20.2 53 18 53 C15.8 53 14 51.2 14 49 Z"
+    fill="url(#mLetterGrad)"
+  />
 </svg>

@@ -61,24 +61,29 @@ export default function Education() {
     const ctx = gsap.context(() => {
       const headerEl = headerRef.current;
       if (headerEl) {
+        gsap.set(headerEl, { opacity: 0 });
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: headerEl, start: "top 88%", toggleActions: "play none none none" },
         });
-        tl.fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        tl.to(headerEl, { opacity: 1, duration: 0 })
+          .fromTo(headerEl.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0)
           .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3");
       }
       const degreeEl = degreeRef.current;
       if (degreeEl) {
-        gsap.fromTo(degreeEl, { opacity: 0, x: -60, scale: 0.95 }, {
+        gsap.set(degreeEl, { opacity: 0, x: -60, scale: 0.95 });
+        gsap.to(degreeEl, {
           opacity: 1, x: 0, scale: 1, duration: 0.85, ease: "power3.out",
-          scrollTrigger: { trigger: degreeEl, start: "top 85%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: degreeEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
       const trainingEl = trainingRef.current;
       if (trainingEl) {
-        gsap.fromTo(trainingEl.querySelectorAll(".training-card"), { opacity: 0, y: 40, scale: 0.95 }, {
+        const cards = trainingEl.querySelectorAll(".training-card");
+        gsap.set(cards, { opacity: 0, y: 40, scale: 0.95 });
+        gsap.to(cards, {
           opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.13, ease: "power3.out",
-          scrollTrigger: { trigger: trainingEl, start: "top 82%", toggleActions: "play none none none" },
+          scrollTrigger: { trigger: trainingEl, start: "top 88%", toggleActions: "play none none none" },
         });
       }
     });
@@ -88,14 +93,14 @@ export default function Education() {
   return (
     <SectionWrapper id="education">
       <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="text-center mb-16" style={{ opacity: 0 }}>
+        <div ref={headerRef} className="text-center mb-16">
           <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Academic &amp; Professional Growth</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             Education &amp; <span className="text-[#7C3AED] neon-purple">Training</span>
           </h2>
         </div>
         <div className="grid lg:grid-cols-3 gap-8">
-          <div ref={degreeRef} className="lg:col-span-1" style={{ opacity: 0 }}>
+          <div ref={degreeRef} className="lg:col-span-1">
             <GlassCard className="p-6 border border-[#7C3AED]/40 h-full flex flex-col justify-between bg-[#7C3AED]/5">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-[#7C3AED]/15 text-[#7C3AED] flex items-center justify-center mb-4 text-2xl">
@@ -117,7 +122,7 @@ export default function Education() {
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               {trainingPrograms.map((prog) => (
-                <div key={prog.title} className="training-card" style={{ opacity: 0 }}>
+                <div key={prog.title} className="training-card">
                   <GlassCard className="p-5 border border-[#585A68]/25 hover:border-[#7C3AED]/50 flex flex-col justify-between h-full" hover delay={0}>
                     <div>
                       <span className="text-[10px] font-bold text-[#6366F1] uppercase tracking-wider block mb-1">{prog.track}</span>

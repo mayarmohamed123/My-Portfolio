@@ -24,16 +24,17 @@ export default function Footer() {
     const el = footerRef.current;
     if (!el) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(el, { opacity: 0, y: 30 }, {
+      gsap.set(el, { opacity: 0, y: 30 });
+      gsap.to(el, {
         opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-        scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none none" },
+        scrollTrigger: { trigger: el, start: "top 98%", toggleActions: "play none none none" },
       });
     }, el);
     return () => ctx.revert();
   }, []);
 
   return (
-    <footer ref={footerRef} className="relative py-10 px-6 border-t border-[#585A68]/30" style={{ opacity: 0 }}>
+    <footer ref={footerRef} className="relative py-10 px-6 border-t border-[#585A68]/30">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex flex-col items-center md:items-start gap-2">
           <Link href="/" className="group hover:opacity-90 transition-opacity">

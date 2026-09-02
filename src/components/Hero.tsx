@@ -99,7 +99,7 @@ export default function Hero() {
             style={{ opacity: 0 }}
           >
             <span className="text-text-main">Mayar</span>{" "}
-            <span className="bg-gradient-to-r from-[#7C3AED] via-[#6366F1] to-[#7C3AED] bg-clip-text text-transparent drop-shadow-sm">
+            <span className="bg-linear-to-r from-[#7C3AED] via-[#6366F1] to-[#7C3AED] bg-clip-text text-transparent drop-shadow-sm">
               Mohamed
             </span>
           </h1>
@@ -160,13 +160,13 @@ export default function Hero() {
         {/* Right Column — Portrait */}
         <div
           ref={portraitRef}
-          className="flex-shrink-0 relative flex items-center justify-center"
+          className="shrink-0 relative flex items-center justify-center"
           style={{ opacity: 0 }}
         >
           <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
             <ThreeHeroCanvas />
           </div>
-          <div className="relative z-10 w-48 h-48 md:w-60 md:h-60 lg:w-64 lg:h-64 rounded-full p-1 bg-gradient-to-tr from-[#7C3AED] via-[#6366F1] to-[#585A68] shadow-2xl">
+          <div className="relative z-10 w-48 h-48 md:w-60 md:h-60 lg:w-64 lg:h-64 rounded-full p-1 bg-linear-to-tr from-[#7C3AED] via-[#6366F1] to-[#585A68] shadow-2xl">
             <div className="w-full h-full rounded-full overflow-hidden relative border-2 border-white/20">
               <Image
                 src="/me.jpeg"

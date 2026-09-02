@@ -13,7 +13,7 @@ import {
   HiFilter,
 } from "react-icons/hi";
 import GlassCard from "@/components/GlassCard";
-import { allProjects, Project } from "@/data/projectsData";
+import { allProjects } from "@/data/projectsData";
 
 type FilterCategory = "All" | "Full-Stack" | "React / Next.js" | "Frontend" | "JavaScript & Apps";
 
@@ -148,7 +148,7 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
                   selectedCategory === cat
-                    ? "bg-gradient-to-r from-[#7C3AED] to-[#6366F1] text-white shadow-md shadow-[#7C3AED]/30 scale-105"
+                    ? "bg-linear-to-r from-[#7C3AED] to-[#6366F1] text-white shadow-md shadow-[#7C3AED]/30 scale-105"
                     : "glass-card text-text-muted hover:text-[#7C3AED] border border-[#585A68]/30"
                 }`}
               >
@@ -207,7 +207,7 @@ export default function ProjectsPage() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0914]/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-t from-[#0B0914]/85 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
 
                   {/* Title & Description */}

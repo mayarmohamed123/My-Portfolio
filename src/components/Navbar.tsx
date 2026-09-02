@@ -105,7 +105,7 @@ export default function Navbar() {
               >
                 {link.label}
                 <span
-                  className={`absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[#7C3AED] to-[#6366F1] transition-all duration-300 ${
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-linear-to-r from-[#7C3AED] to-[#6366F1] transition-all duration-300 ${
                     isProjectsPageLink ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
