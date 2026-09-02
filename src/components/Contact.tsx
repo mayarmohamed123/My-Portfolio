@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
@@ -8,7 +8,10 @@ import GlassCard from "./GlassCard";
 import {
   HiMail, HiUser, HiChat, HiPaperAirplane,
   HiLocationMarker, HiTranslate, HiSparkles,
+  HiPhone, HiDocumentText, HiExternalLink
 } from "react-icons/hi";
+import { SiGithub, SiFacebook } from "react-icons/si";
+import { FaLinkedinIn } from "react-icons/fa6";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +22,36 @@ const softSkills = [
   "Adaptability & Fast Learning",
   "Teaching & Mentoring",
   "Attention to Detail",
+];
+
+const directContacts = [
+  {
+    icon: HiMail,
+    label: "Email",
+    value: "mayar201500@gmail.com",
+    href: "mailto:mayar201500@gmail.com",
+    color: "text-purple-400",
+  },
+  {
+    icon: HiPhone,
+    label: "Phone / WhatsApp",
+    value: "+20 102 535 0571",
+    href: "tel:+201025350571",
+    color: "text-emerald-400",
+  },
+  {
+    icon: HiDocumentText,
+    label: "CV / Resume",
+    value: "View Google Drive CV",
+    href: "https://drive.google.com/file/d/138y7nH08ob8c-iGs9CWMR20I4MdsOWoJ/view?usp=drivesdk",
+    color: "text-amber-400",
+  },
+];
+
+const socialMedia = [
+  { icon: SiGithub, label: "GitHub", href: "https://github.com/mayarmohamed123" },
+  { icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/in/mayar-shehab-eldin-453b1a220/" },
+  { icon: SiFacebook, label: "Facebook", href: "https://www.facebook.com/mayar.shehab.eldin/" },
 ];
 
 export default function Contact() {
@@ -65,6 +98,12 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
+    
+    // Direct mailto trigger to send email directly to mayar201500@gmail.com
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    window.location.href = `mailto:mayar201500@gmail.com?subject=${subject}&body=${body}`;
+
     setTimeout(() => setSubmitted(false), 3500);
     setFormData({ name: "", email: "", message: "" });
   };
@@ -78,11 +117,62 @@ export default function Contact() {
             Get In <span className="text-[#7C3AED] neon-purple">Touch</span>
           </h2>
           <p className="text-text-muted mt-4 max-w-lg mx-auto text-sm leading-relaxed">
-            Have a project in mind, full-stack opportunity, or architectural concept? Reach out — I&apos;d love to connect.
+            Have a project in mind, full-stack opportunity, or architectural concept? Reach out directly via email, phone, or message below.
           </p>
         </div>
         <div className="grid lg:grid-cols-3 gap-10 items-start">
           <div ref={infoRef} className="lg:col-span-1 space-y-6">
+            {/* Direct Contact Methods */}
+            <div style={{ opacity: 0 }}>
+              <GlassCard className="p-6 border border-[#585A68]/30 space-y-4">
+                <h3 className="text-lg font-bold text-text-main mb-2 flex items-center gap-2">
+                  <HiMail className="text-[#7C3AED]" /> Contact Information
+                </h3>
+                {directContacts.map((contact) => (
+                  <a
+                    key={contact.label}
+                    href={contact.href}
+                    target={contact.href.startsWith("http") ? "_blank" : "_self"}
+                    rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 p-3 rounded-xl bg-[#7C3AED]/5 border border-[#585A68]/20 hover:border-[#7C3AED]/50 hover:bg-[#7C3AED]/10 transition-all duration-300 group"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-[#7C3AED]/15 flex items-center justify-center text-lg text-[#7C3AED] shrink-0">
+                      <contact.icon />
+                    </div>
+                    <div className="overflow-hidden flex-1">
+                      <p className="text-[10px] uppercase font-bold text-[#6C6E7E] tracking-wider">{contact.label}</p>
+                      <p className="text-xs font-semibold text-text-main group-hover:text-[#7C3AED] transition-colors truncate">
+                        {contact.value}
+                      </p>
+                    </div>
+                    <HiExternalLink className="text-xs text-[#6C6E7E] group-hover:text-[#7C3AED] transition-colors" />
+                  </a>
+                ))}
+              </GlassCard>
+            </div>
+
+            {/* Social Media Links */}
+            <div style={{ opacity: 0 }}>
+              <GlassCard className="p-6 border border-[#585A68]/30">
+                <h3 className="text-lg font-bold text-text-main mb-4">Connect Online</h3>
+                <div className="flex items-center gap-3">
+                  {socialMedia.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3 rounded-xl glass-card border border-[#585A68]/30 flex flex-col items-center justify-center gap-1.5 text-text-muted hover:text-[#7C3AED] hover:border-[#7C3AED]/50 transition-all duration-300 hover:scale-105"
+                    >
+                      <social.icon className="text-xl" />
+                      <span className="text-[10px] font-semibold">{social.label}</span>
+                    </a>
+                  ))}
+                </div>
+              </GlassCard>
+            </div>
+
+            {/* Location & Languages */}
             <div style={{ opacity: 0 }}>
               <GlassCard className="p-6 border border-[#585A68]/30">
                 <h3 className="text-lg font-bold text-text-main mb-4 flex items-center gap-2">
@@ -104,10 +194,12 @@ export default function Contact() {
                 </div>
               </GlassCard>
             </div>
+
+            {/* Soft Skills */}
             <div style={{ opacity: 0 }}>
               <GlassCard className="p-6 border border-[#585A68]/30">
                 <h3 className="text-lg font-bold text-text-main mb-3 flex items-center gap-2">
-                  <HiSparkles className="text-[#7C3AED]" /> Soft Skills &amp; Strengths
+                  <HiSparkles className="text-[#7C3AED]" /> Soft Skills
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {softSkills.map((skill) => (
@@ -119,6 +211,8 @@ export default function Contact() {
               </GlassCard>
             </div>
           </div>
+
+          {/* Form */}
           <div className="lg:col-span-2">
             <form
               ref={formRef}
@@ -157,10 +251,10 @@ export default function Contact() {
                 className="w-full py-4 rounded-xl cta-purple font-semibold text-sm tracking-wide flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
               >
                 {submitted ? (
-                  <span>Message Sent Successfully! ✓</span>
+                  <span>Opening Mail Client to Send Directly... ✓</span>
                 ) : (
                   <>
-                    Send Message
+                    Send Email Directly to mayar201500@gmail.com
                     <HiPaperAirplane className="text-lg rotate-90" />
                   </>
                 )}

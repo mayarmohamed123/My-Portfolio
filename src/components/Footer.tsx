@@ -3,18 +3,20 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SiGithub } from "react-icons/si";
-import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { HiHeart } from "react-icons/hi";
+import { SiGithub, SiFacebook } from "react-icons/si";
+import { FaLinkedinIn } from "react-icons/fa6";
+import { HiMail, HiDocumentText, HiHeart } from "react-icons/hi";
 import Link from "next/link";
 import MayarLogo from "./MayarLogo";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const socialLinks = [
-  { icon: SiGithub, href: "https://github.com/", label: "GitHub" },
-  { icon: FaLinkedinIn, href: "https://linkedin.com/", label: "LinkedIn" },
-  { icon: FaXTwitter, href: "https://x.com/", label: "X (Twitter)" },
+  { icon: SiGithub, href: "https://github.com/mayarmohamed123", label: "GitHub" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/mayar-shehab-eldin-453b1a220/", label: "LinkedIn" },
+  { icon: SiFacebook, href: "https://www.facebook.com/mayar.shehab.eldin/", label: "Facebook" },
+  { icon: HiMail, href: "mailto:mayar201500@gmail.com", label: "Email" },
+  { icon: HiDocumentText, href: "https://drive.google.com/file/d/138y7nH08ob8c-iGs9CWMR20I4MdsOWoJ/view?usp=drivesdk", label: "CV / Resume" },
 ];
 
 export default function Footer() {

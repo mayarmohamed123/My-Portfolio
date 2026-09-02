@@ -113,6 +113,16 @@ export default function Navbar() {
             );
           })}
 
+          {/* CV Button */}
+          <a
+            href="https://drive.google.com/file/d/138y7nH08ob8c-iGs9CWMR20I4MdsOWoJ/view?usp=drivesdk"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-semibold px-4 py-2 rounded-full border border-[#7C3AED]/40 text-[#7C3AED] hover:bg-[#7C3AED] hover:text-white transition-all duration-300 shadow-xs"
+          >
+            CV
+          </a>
+
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
@@ -167,6 +177,15 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="https://drive.google.com/file/d/138y7nH08ob8c-iGs9CWMR20I4MdsOWoJ/view?usp=drivesdk"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="mobile-link text-xs font-semibold px-6 py-2.5 rounded-full bg-[#7C3AED] text-white transition-all duration-300 mt-2"
+          >
+            View CV / Resume
+          </a>
         </div>
       </div>
     </nav>

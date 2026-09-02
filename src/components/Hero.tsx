@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { HiArrowDown } from "react-icons/hi";
+import { HiArrowDown, HiDocumentText, HiMail } from "react-icons/hi";
+import { SiGithub, SiFacebook } from "react-icons/si";
+import { FaLinkedinIn } from "react-icons/fa6";
 import Image from "next/image";
 import ThreeHeroCanvas from "./ThreeHeroCanvas";
 
@@ -138,21 +140,68 @@ export default function Hero() {
 
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
+            className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start items-center"
             style={{ opacity: 0 }}
           >
             <a
               href="#projects"
-              className="cta-purple inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm tracking-wide"
+              className="cta-purple inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm tracking-wide"
             >
               View Featured Work
               <HiArrowDown className="text-lg animate-bounce" />
             </a>
             <a
+              href="https://drive.google.com/file/d/138y7nH08ob8c-iGs9CWMR20I4MdsOWoJ/view?usp=drivesdk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-outline inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm tracking-wide text-[#7C3AED] hover:text-white"
+            >
+              <HiDocumentText className="text-lg" />
+              View CV / Resume
+            </a>
+            <a
               href="#contact"
-              className="cta-outline inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm tracking-wide"
+              className="px-6 py-3.5 rounded-full border border-[#585A68]/30 hover:border-[#7C3AED]/50 text-text-muted hover:text-text-main text-sm font-semibold transition-all duration-300"
             >
               Get In Touch
+            </a>
+          </div>
+
+          {/* Quick Contact & Social Icons */}
+          <div className="flex items-center gap-3 justify-center lg:justify-start mt-6 text-[#6C6E7E]">
+            <a
+              href="https://github.com/mayarmohamed123"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-[#7C3AED] hover:border-[#7C3AED]/50 transition-all duration-300 hover:scale-110 border border-[#585A68]/30"
+            >
+              <SiGithub className="text-base" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mayar-shehab-eldin-453b1a220/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-[#7C3AED] hover:border-[#7C3AED]/50 transition-all duration-300 hover:scale-110 border border-[#585A68]/30"
+            >
+              <FaLinkedinIn className="text-base" />
+            </a>
+            <a
+              href="https://www.facebook.com/mayar.shehab.eldin/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook Profile"
+              className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-[#7C3AED] hover:border-[#7C3AED]/50 transition-all duration-300 hover:scale-110 border border-[#585A68]/30"
+            >
+              <SiFacebook className="text-base" />
+            </a>
+            <a
+              href="mailto:mayar201500@gmail.com"
+              aria-label="Email Mayar Directly"
+              className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-[#7C3AED] hover:border-[#7C3AED]/50 transition-all duration-300 hover:scale-110 border border-[#585A68]/30"
+            >
+              <HiMail className="text-base" />
             </a>
           </div>
         </div>
