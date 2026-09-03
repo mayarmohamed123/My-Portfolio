@@ -10,44 +10,29 @@ import {
   HiArrowLeft,
   HiSparkles,
   HiSearch,
-  HiFilter,
 } from "react-icons/hi";
 import GlassCard from "@/components/GlassCard";
 import { allProjects } from "@/data/projectsData";
 
-type FilterCategory = "All" | "Full-Stack" | "React / Next.js" | "Frontend" | "JavaScript & Apps";
-
-const categories: FilterCategory[] = [
-  "All",
-  "Full-Stack",
-  "React / Next.js",
-  "Frontend",
-  "JavaScript & Apps",
-];
-
 export default function ProjectsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
   const headerRef = useRef<HTMLDivElement>(null);
-  const controlsRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  // Filtered projects list
+  // Filter projects by search query only (category filtering removed)
   const filteredProjects = useMemo(() => {
-    return allProjects.filter((project) => {
-      const matchesCategory =
-        selectedCategory === "All" || project.category === selectedCategory;
-      const matchesSearch =
-        searchQuery.trim() === "" ||
-        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.tags.some((tag) =>
-          tag.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategory, searchQuery]);
+    if (!searchQuery.trim()) return allProjects;
+    const query = searchQuery.toLowerCase();
+    return allProjects.filter(
+      (project) =>
+        project.title.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+        project.badge.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
 
   // Initial page load GSAP animation
   useEffect(() => {
@@ -60,12 +45,12 @@ export default function ProjectsPage() {
           { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" }
         );
       }
-      const controlsEl = controlsRef.current;
-      if (controlsEl) {
+      const searchEl = searchRef.current;
+      if (searchEl) {
         gsap.fromTo(
-          controlsEl,
+          searchEl,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: "power2.out" }
+          { opacity: 1, y: 0, duration: 0.6, delay: 0.25, ease: "power2.out" }
         );
       }
       const gridEl = gridRef.current;
@@ -78,34 +63,15 @@ export default function ProjectsPage() {
             y: 0,
             scale: 1,
             duration: 0.6,
-            stagger: 0.08,
+            stagger: 0.05,
             ease: "power3.out",
-            delay: 0.4,
+            delay: 0.35,
           }
         );
       }
     });
     return () => ctx.revert();
   }, []);
-
-  // Animate grid items whenever category or search filter updates
-  useEffect(() => {
-    const gridEl = gridRef.current;
-    if (gridEl && gridEl.children.length > 0) {
-      gsap.fromTo(
-        gridEl.children,
-        { opacity: 0, y: 20, scale: 0.97 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.4,
-          stagger: 0.04,
-          ease: "power2.out",
-        }
-      );
-    }
-  }, [selectedCategory, searchQuery]);
 
   return (
     <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 relative z-10">
@@ -122,7 +88,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Page Header */}
-        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-14">
+        <div ref={headerRef} className="text-center max-w-3xl mx-auto mb-10">
           <p className="font-magiera text-3xl md:text-4xl text-[#7C3AED] mb-1">
             Complete Showcase
           </p>
@@ -130,42 +96,20 @@ export default function ProjectsPage() {
             All <span className="text-[#7C3AED] neon-purple">Projects</span> &amp; Work
           </h1>
           <p className="text-text-muted text-sm md:text-base leading-relaxed">
-            Explore my complete portfolio of graduation achievements, client platforms,
-            commercial systems, full-stack applications, and interactive web tools.
+            Explore my complete portfolio of live web applications, full-stack systems, commercial projects, client applications, and interactive web tools ({allProjects.length} total projects).
           </p>
         </div>
 
-        {/* Controls: Category Filter + Search Bar */}
-        <div
-          ref={controlsRef}
-          className="flex flex-col md:flex-row items-center justify-between gap-4 mb-12"
-        >
-          {/* Category Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-linear-to-r from-[#7C3AED] to-[#6366F1] text-white shadow-md shadow-[#7C3AED]/30 scale-105"
-                    : "glass-card text-text-muted hover:text-[#7C3AED] border border-[#585A68]/30"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Search Input */}
-          <div className="relative w-full md:w-72">
-            <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6C6E7E] text-base" />
+        {/* Search Bar */}
+        <div ref={searchRef} className="max-w-md mx-auto mb-12">
+          <div className="relative w-full">
+            <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6C6E7E] text-lg" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by tech or name..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-full bg-transparent glass-card border border-[#585A68]/35 text-xs text-text-main placeholder-[#6C6E7E] focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20 outline-none transition-all duration-300"
+              placeholder="Search projects by name, technology, or feature..."
+              className="w-full pl-11 pr-4 py-3 rounded-full bg-transparent glass-card border border-[#585A68]/35 text-xs text-text-main placeholder-[#6C6E7E] focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20 outline-none transition-all duration-300 shadow-md"
             />
           </div>
         </div>
@@ -260,10 +204,9 @@ export default function ProjectsPage() {
           </div>
         ) : (
           <div className="text-center py-20 glass-card border border-[#585A68]/30 max-w-md mx-auto">
-            <HiFilter className="text-4xl text-[#7C3AED] mx-auto mb-3 opacity-60" />
             <h3 className="text-lg font-bold text-text-main mb-1">No Projects Found</h3>
             <p className="text-xs text-text-muted">
-              Try adjusting your search query or selecting a different category filter.
+              Try searching with a different term.
             </p>
           </div>
         )}
