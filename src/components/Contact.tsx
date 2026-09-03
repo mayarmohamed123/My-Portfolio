@@ -66,23 +66,29 @@ export default function Contact() {
     const ctx = gsap.context(() => {
       const headerEl = headerRef.current;
       if (headerEl) {
+        gsap.set(headerEl, { opacity: 0 });
         const tl = gsap.timeline({
           scrollTrigger: { trigger: headerEl, start: "top 85%", toggleActions: "play none none none" },
         });
-        tl.fromTo(headerEl.querySelector("p.font-magiera"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" })
+        tl.to(headerEl, { opacity: 1, duration: 0 }, 0)
+          .fromTo(headerEl.querySelector("p.font-magiera"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0)
           .fromTo(headerEl.querySelector("h2"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3")
           .fromTo(headerEl.querySelector("p.text-text-muted"), { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.25");
       }
+
       const infoEl = infoRef.current;
       if (infoEl) {
-        gsap.fromTo(infoEl.children, { opacity: 0, x: -50 }, {
+        gsap.set(infoEl.children, { opacity: 0, x: -50 });
+        gsap.to(infoEl.children, {
           opacity: 1, x: 0, duration: 0.75, stagger: 0.18, ease: "power3.out",
           scrollTrigger: { trigger: infoEl, start: "top 85%", toggleActions: "play none none none" },
         });
       }
+
       const formEl = formRef.current;
       if (formEl) {
-        gsap.fromTo(formEl, { opacity: 0, x: 50 }, {
+        gsap.set(formEl, { opacity: 0, x: 50 });
+        gsap.to(formEl, {
           opacity: 1, x: 0, duration: 0.8, ease: "power3.out",
           scrollTrigger: { trigger: formEl, start: "top 85%", toggleActions: "play none none none" },
         });
@@ -111,7 +117,7 @@ export default function Contact() {
   return (
     <SectionWrapper id="contact">
       <div className="max-w-6xl mx-auto">
-        <div ref={headerRef} className="text-center mb-16" style={{ opacity: 0 }}>
+        <div ref={headerRef} className="text-center mb-16">
           <p className="font-magiera text-3xl text-[#7C3AED] mb-1">Let&apos;s Build Together</p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-main">
             Get In <span className="text-[#7C3AED] neon-purple">Touch</span>
@@ -120,10 +126,11 @@ export default function Contact() {
             Have a project in mind, full-stack opportunity, or architectural concept? Reach out directly via email, phone, or message below.
           </p>
         </div>
+
         <div className="grid lg:grid-cols-3 gap-10 items-start">
           <div ref={infoRef} className="lg:col-span-1 space-y-6">
             {/* Direct Contact Methods */}
-            <div style={{ opacity: 0 }}>
+            <div>
               <GlassCard className="p-6 border border-[#585A68]/30 space-y-4">
                 <h3 className="text-lg font-bold text-text-main mb-2 flex items-center gap-2">
                   <HiMail className="text-[#7C3AED]" /> Contact Information
@@ -152,7 +159,7 @@ export default function Contact() {
             </div>
 
             {/* Social Media Links */}
-            <div style={{ opacity: 0 }}>
+            <div>
               <GlassCard className="p-6 border border-[#585A68]/30">
                 <h3 className="text-lg font-bold text-text-main mb-4">Connect Online</h3>
                 <div className="flex items-center gap-3">
@@ -173,7 +180,7 @@ export default function Contact() {
             </div>
 
             {/* Location & Languages */}
-            <div style={{ opacity: 0 }}>
+            <div>
               <GlassCard className="p-6 border border-[#585A68]/30">
                 <h3 className="text-lg font-bold text-text-main mb-4 flex items-center gap-2">
                   <HiLocationMarker className="text-[#7C3AED]" /> Location &amp; Languages
@@ -196,7 +203,7 @@ export default function Contact() {
             </div>
 
             {/* Soft Skills */}
-            <div style={{ opacity: 0 }}>
+            <div>
               <GlassCard className="p-6 border border-[#585A68]/30">
                 <h3 className="text-lg font-bold text-text-main mb-3 flex items-center gap-2">
                   <HiSparkles className="text-[#7C3AED]" /> Soft Skills
@@ -218,7 +225,6 @@ export default function Contact() {
               ref={formRef}
               onSubmit={handleSubmit}
               className="glass-card p-8 md:p-10 space-y-6 border border-[#585A68]/30 shadow-xl"
-              style={{ opacity: 0 }}
             >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative">

@@ -44,7 +44,7 @@ export const mainProjects: Project[] = [
     image: "/gsap-cocktails.png",
     tags: ["GSAP", "ScrollTrigger", "JavaScript", "HTML5", "CSS3"],
     codeUrl: "https://github.com/mayarmohamed123/gsap-cocktails",
-    liveUrl: "https://github.com/mayarmohamed123/gsap-cocktails",
+    liveUrl: "https://gsap-cocktails-nu-seven.vercel.app/",
     featured: true,
   },
 ];
